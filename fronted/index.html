@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Anuncios</title>
+    <title>Lista de Anuncios y Comentarios</title>
 </head>
 <body>
     <h1>Anuncios</h1>
@@ -16,29 +16,17 @@
         <button type="submit">Publicar</button>
     </form>
 
-    <script>
-        async function cargarAnuncios() {
-            const response = await fetch('https://API_GATEWAY_URL/anuncios');
-            const anuncios = await response.json();
-            const lista = document.getElementById('anuncios-list');
-            lista.innerHTML = anuncios.map(a => `<li>${a.title}: ${a.description}</li>`).join('');
-        }
+    <h1>Comentarios</h1>
+    <ul id="comentarios-list"></ul>
 
-        document.getElementById('anuncio-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const titulo = document.getElementById('titulo').value;
-            const descripcion = document.getElementById('descripcion').value;
+    <h2>Publicar un Comentario</h2>
+    <form id="comentario-form">
+        <input type="text" id="autor" placeholder="Tu nombre" required />
+        <input type="text" id="texto" placeholder="Escribe tu comentario" required />
+        <input type="text" id="anuncioId" placeholder="ID del Anuncio" required />
+        <button type="submit">Publicar</button>
+    </form>
 
-            await fetch('https://API_GATEWAY_URL/anuncios', {
-                method: 'POST',
-                body: JSON.stringify({ anuncioId: Date.now().toString(), title: titulo, description: descripcion }),
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            cargarAnuncios();
-        });
-
-        cargarAnuncios();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
